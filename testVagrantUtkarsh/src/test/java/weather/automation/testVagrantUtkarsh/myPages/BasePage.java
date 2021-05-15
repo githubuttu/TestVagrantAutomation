@@ -8,9 +8,11 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -55,7 +57,7 @@ public class BasePage {
 	{
 		boolean check=false;
 		try {
-		WebDriverWait wait = new WebDriverWait(driver, 200);
+		WebDriverWait wait = new WebDriverWait(driver, 100);
 		check=wait.until(ExpectedConditions.visibilityOf(e)).isDisplayed();
 		}
 		catch (NoSuchElementException a) {
@@ -88,5 +90,46 @@ public class BasePage {
 		} catch (TimeoutException a) {
 			a.printStackTrace();
 		}
+	}
+	
+	public void enterText(WebElement element, String textValue)
+	{
+		try {
+		if (isWebElementLoaded(element)) {
+			element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			element.sendKeys(Keys.DELETE);
+			element.sendKeys(textValue);
+			element.sendKeys(Keys.TAB);
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Not able to enter text in the textbox!!");
+	}
+	}
+	
+	public void clickJS(WebElement element) {
+		try {
+			isWebElementLoaded(element);
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void selectCheckBox(WebElement element) throws InterruptedException {
+		try {
+			if (element.isSelected()) {
+				Actions actions = new Actions(driver);
+				actions.doubleClick(element).perform();
+			} else {
+				element.click();
+			}
+
+		} catch (Exception e) {
+			System.out.println("Checkbox is not visible" + e);
+		}
+
 	}
 }

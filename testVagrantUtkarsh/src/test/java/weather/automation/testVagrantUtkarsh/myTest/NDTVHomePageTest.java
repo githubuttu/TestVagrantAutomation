@@ -1,5 +1,7 @@
 package weather.automation.testVagrantUtkarsh.myTest;
 
+import java.util.LinkedHashMap;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -10,6 +12,7 @@ import org.testng.annotations.Test;
 
 import weather.automation.testVagrantUtkarsh.myPages.BasePage;
 import weather.automation.testVagrantUtkarsh.myPages.NDTVHomePage;
+import weather.automation.testVagrantUtkarsh.myPages.NDTVWeatherPage;
 
 public class NDTVHomePageTest extends BasePage {
 
@@ -28,10 +31,13 @@ WebDriver driver;
 	}
 	
 	@Test
-	public void collectWeatherData()
+	@Parameters({"expectedCity"})
+	public void collectWeatherData(String expectedCity)
 	{
 		NDTVHomePage nHP=PageFactory.initElements(driver, NDTVHomePage.class);
 		nHP.navigateToWeatherPage();
+		NDTVWeatherPage nWP=PageFactory.initElements(driver, NDTVWeatherPage.class);
+		LinkedHashMap<String, String> weatherDataUI = nWP.extractWeatherDetailsFromUI(expectedCity);
 	}
 	
 	
