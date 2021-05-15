@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="suite1">
-<test name="test1">
+<suite name="suiteA">
+<parameter name="browser" value="chrome"/>
+<test name="testA">
 <classes>
 <class name="weather.automation.testVagrantUtkarsh.myTest.NDTVHomePageTest"/>
 </classes>

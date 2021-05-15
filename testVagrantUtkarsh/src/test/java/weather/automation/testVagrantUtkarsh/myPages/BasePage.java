@@ -3,10 +3,17 @@ package weather.automation.testVagrantUtkarsh.myPages;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
 
@@ -31,20 +38,6 @@ public class BasePage {
 	}
 	Properties propertyFile=new Properties();
 	FileInputStream file = null;
-
-
-	
-	public boolean loadWebElement(WebElement element) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	public void scrollToElement(WebElement element) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 	public String getPropertyFileData(String key) {
 		try {
@@ -58,4 +51,42 @@ public class BasePage {
 		return propertyFile.getProperty(key);
 	}
 
+	public boolean isWebElementLoaded(WebElement e)
+	{
+		boolean check=false;
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, 200);
+		check=wait.until(ExpectedConditions.visibilityOf(e)).isDisplayed();
+		}
+		catch (NoSuchElementException a) {
+			check = false;
+		} catch (NullPointerException a) {
+			check = false;
+		} catch (TimeoutException a) {
+			check = false;
+		}
+		return check;
+	}
+	
+	public void waitForPageToLoad()
+	{
+		ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
+
+			public Boolean apply(WebDriver input) {
+				return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+			}
+			
+		};
+		try {
+		WebDriverWait wait =new WebDriverWait(driver, 200);
+		wait.until(expectation);
+		}
+		catch (NoSuchElementException a) {
+			a.printStackTrace();
+		} catch (NullPointerException a) {
+			a.printStackTrace();
+		} catch (TimeoutException a) {
+			a.printStackTrace();
+		}
+	}
 }
