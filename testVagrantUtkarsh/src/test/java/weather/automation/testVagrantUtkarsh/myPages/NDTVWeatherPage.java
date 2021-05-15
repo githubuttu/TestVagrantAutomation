@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 
 public class NDTVWeatherPage extends BasePage {
@@ -27,8 +28,13 @@ public class NDTVWeatherPage extends BasePage {
 		try {
 		enterText(searchTxtBox, expectedCity);
 		WebElement checkBx = driver.findElement(By.xpath("//*[@id='"+expectedCity+"']"));
+		String checkBoxCitySelectedTxt = checkBx.getText();
 		selectCheckBox(checkBx);
-		WebElement expandcityDetail=driver.findElement(By.xpath("//*[@class='cityText' and text()='Lucknow']"));
+		WebElement expandcityDetail=driver.findElement(By.xpath("//*[@class='cityText' and text()='"+expectedCity+"']"));
+		String mapShowCityText = expandcityDetail.getText();
+		
+		//Validate city in checkbox and on map are same
+		Assert.assertEquals(checkBoxCitySelectedTxt, mapShowCityText);
 		clickJS(expandcityDetail);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {

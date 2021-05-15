@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import weather.automation.testVagrantUtkarsh.myAPIPages.APIPage;
 import weather.automation.testVagrantUtkarsh.myPages.BasePage;
 import weather.automation.testVagrantUtkarsh.myPages.NDTVHomePage;
 import weather.automation.testVagrantUtkarsh.myPages.NDTVWeatherPage;
@@ -17,35 +18,42 @@ import weather.automation.testVagrantUtkarsh.myPages.NDTVWeatherPage;
 public class NDTVHomePageTest extends BasePage {
 
 WebDriver driver;
-	@BeforeMethod
-	@Parameters({"browser"})
-	public void setUp(String browser)
-	{
-		if(browser.equalsIgnoreCase("chrome"))
-		{
-			System.setProperty("webdriver.chrome.driver", getPropertyFileData("chromeDriverPath"));
-			driver = new ChromeDriver();
-			driver.get(getPropertyFileData("url"));
-			driver.manage().window().maximize();
-		}
-	}
+//	@BeforeMethod
+//	@Parameters({"browser"})
+//	public void setUp(String browser)
+//	{
+//		if(browser.equalsIgnoreCase("chrome"))
+//		{
+//			System.setProperty("webdriver.chrome.driver", getPropertyFileData("chromeDriverPath"));
+//			driver = new ChromeDriver();
+//			driver.get(getPropertyFileData("url"));
+//			driver.manage().window().maximize();
+//		}
+//	}
 	
+//	@Test
+//	@Parameters({"expectedCityUI"})
+//	public void collectWeatherDataUI(String expectedCityUI)
+//	{
+//		NDTVHomePage nHP=PageFactory.initElements(driver, NDTVHomePage.class);
+//		nHP.navigateToWeatherPage();
+//		NDTVWeatherPage nWP=PageFactory.initElements(driver, NDTVWeatherPage.class);
+//		LinkedHashMap<String, String> weatherDataUI = nWP.extractWeatherDetailsFromUI(expectedCityUI);
+//	}
 	@Test
-	@Parameters({"expectedCity"})
-	public void collectWeatherData(String expectedCity)
+	@Parameters({"expectedCityAPI"})
+	public void collectWeatherDataAPI(String expectedCityAPI)
 	{
-		NDTVHomePage nHP=PageFactory.initElements(driver, NDTVHomePage.class);
-		nHP.navigateToWeatherPage();
-		NDTVWeatherPage nWP=PageFactory.initElements(driver, NDTVWeatherPage.class);
-		LinkedHashMap<String, String> weatherDataUI = nWP.extractWeatherDetailsFromUI(expectedCity);
+		APIPage apiPage = PageFactory.initElements(driver, APIPage.class);
+		apiPage.extractWeatherDetailsFromAPI(expectedCityAPI);
 	}
 	
 	
-	@AfterMethod
-	public void tearDown()
-	{
-//		driver.close();
-//		driver.quit();
-	}
+//	@AfterMethod
+//	public void tearDown()
+//	{
+////		driver.close();
+////		driver.quit();
+//	}
 
 }
