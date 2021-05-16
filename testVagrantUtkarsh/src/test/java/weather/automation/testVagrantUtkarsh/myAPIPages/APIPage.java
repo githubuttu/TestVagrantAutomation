@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import junit.framework.Assert;
 import weather.automation.testVagrantUtkarsh.myPages.BasePage;
 import weather.automation.testVagrantUtkarsh.myResponse.ResponseOjectDataTransfer;
 
@@ -20,7 +21,7 @@ public class APIPage extends BasePage {
 	String parameterName2=getPropertyFileData("key2");
 	String parameterValue2=getPropertyFileData("value2");
 	
-public void extractWeatherDetailsFromAPI(String expectedCityAPI)
+public ResponseOjectDataTransfer extractWeatherDetailsFromAPI(String expectedCityAPI)
 {
 	try {
 	RestAssured.baseURI= urI;
@@ -28,6 +29,7 @@ public void extractWeatherDetailsFromAPI(String expectedCityAPI)
 	Response response = request.queryParam(parameterName1, expectedCityAPI).queryParam(parameterName2, parameterValue2).get("/weather");
 //	Response response = RestAssured.get("http://api.openweathermap.org/data/2.5/weather?q=Lucknow&appid=7fe67bf08c80ded756e598d6f8fedaea");
 	System.out.println(response);
+	Assert.assertEquals(response.getStatusCode(), 200);
 	String resBody = response.asString();
 	System.out.println("Response------------------------>>"+resBody);
 	objectData=gson.fromJson(resBody, ResponseOjectDataTransfer.class);
@@ -38,6 +40,8 @@ public void extractWeatherDetailsFromAPI(String expectedCityAPI)
 		System.out.println("API request is invalid" + e);
 	}
 	
-	
+	return objectData;
 }
+
+
 }

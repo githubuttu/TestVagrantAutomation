@@ -12,6 +12,7 @@ import org.testng.Assert;
 
 
 public class NDTVWeatherPage extends BasePage {
+	String mapShowCityText;
 	public NDTVWeatherPage(WebDriver driver)
 	{
 		super();
@@ -31,10 +32,10 @@ public class NDTVWeatherPage extends BasePage {
 		String checkBoxCitySelectedTxt = checkBx.getText();
 		selectCheckBox(checkBx);
 		WebElement expandcityDetail=driver.findElement(By.xpath("//*[@class='cityText' and text()='"+expectedCity+"']"));
-		String mapShowCityText = expandcityDetail.getText();
+		mapShowCityText = expandcityDetail.getText();
 		
 		//Validate city in checkbox and on map are same
-		Assert.assertEquals(checkBoxCitySelectedTxt, mapShowCityText);
+//		Assert.assertEquals(checkBoxCitySelectedTxt, mapShowCityText);
 		clickJS(expandcityDetail);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -57,6 +58,7 @@ public class NDTVWeatherPage extends BasePage {
 			weatherData.put(Key, value);
 			
 		}
+		weatherData.put("cityUI", mapShowCityText);
 		return weatherData;
 	}
 }
