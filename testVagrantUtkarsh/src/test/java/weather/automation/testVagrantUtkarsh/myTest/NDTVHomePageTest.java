@@ -76,9 +76,14 @@ WebDriver driver;
 		System.out.println("tempCelsiusUI--------------------->"+tempCelsiusUI);
 		System.out.println("tempCelsiusAPI------------------->"+tempCelsiusAPI);
 		Assert.assertEquals(cityUI, cityAPI);
-		if(Math.subtractExact(tempCelsiusUI, tempCelsiusAPI)==2 || Math.subtractExact(tempCelsiusUI, tempCelsiusAPI)==-2)
+		int tempDifference=Math.subtractExact(tempCelsiusUI, tempCelsiusAPI);
+		if(tempDifference<=2 || tempDifference>=-2)
 		{
 			Assert.assertTrue(true, "UI and API temperature are same!!");
+		}
+		else if(tempCelsiusUI==tempCelsiusAPI)
+		{
+			Assert.assertTrue(true, "UI and API temperature are same!!");	
 		}
 		else
 		{
@@ -93,8 +98,8 @@ WebDriver driver;
 	@AfterClass
 	public void tearDown()
 	{
-//		driver.close();
-//		driver.quit();
+		driver.close();
+		driver.quit();
 	}
 
 }

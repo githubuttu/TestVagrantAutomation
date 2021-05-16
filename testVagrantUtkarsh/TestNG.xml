@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="suiteA">
+<listeners>
+<listener class-name="weather.automation.testVagrantUtkarsh.myExtentListener.ExtentReporterNG"/>
+</listeners>
 <parameter name="browser" value="chrome"/>
 <parameter name="expectedCityUI" value="Lucknow"/>
 <parameter name="expectedCityAPI" value="Lucknow"/>
-
 <test name="testA">
 <classes>
 <class name="weather.automation.testVagrantUtkarsh.myTest.NDTVHomePageTest"/>
