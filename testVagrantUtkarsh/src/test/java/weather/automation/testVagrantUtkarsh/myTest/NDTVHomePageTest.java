@@ -35,7 +35,7 @@ WebDriver driver;
 			driver.manage().window().maximize();
 		}
 	}
-	
+	//Welcome
 	@Test(priority=1)
 	@Parameters({"expectedCityUI"})
 	public void collectWeatherDataUI(String expectedCityUI)
@@ -77,7 +77,7 @@ WebDriver driver;
 		System.out.println("tempCelsiusAPI------------------->"+tempCelsiusAPI);
 		Assert.assertEquals(cityUI, cityAPI);
 		int tempDifference=Math.subtractExact(tempCelsiusUI, tempCelsiusAPI);
-		if(tempDifference<=2 && tempDifference>=-2)
+		if(tempDifference<=2 || tempDifference>=-2)
 		{
 			Assert.assertTrue(true, "UI and API temperature are same!!");
 		}
